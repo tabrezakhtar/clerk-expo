@@ -1,8 +1,25 @@
-# Welcome to your Expo app 👋
+# Expo + Clerk Authentication Example (Android)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+This is an example Expo project demonstrating how to integrate Clerk authentication in a React Native mobile app using Expo.
 
-## Get started
+The example focuses on Android development and testing workflow.
+
+## Features
+
+- Clerk authentication (sign-up, sign-in, sign-out)
+- Multi-factor authentication (MFA)
+- Protected routes using Clerk hooks
+- Expo Router file-based routing
+- Basic user profile display after login
+
+## Requirements
+
+- Node.js 18+
+- npm or yarn
+- Expo CLI (`npm install -g expo-cli`)
+- Android Studio (for emulator) or physical Android device
+
+## Setup
 
 1. Install dependencies
 
@@ -10,41 +27,69 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Create a Clerk application
 
-   ```bash
-   npx expo start
+   - Go to https://clerk.com
+   - Create a new application
+   - Choose "React Native / Expo" as the framework
+   - Copy your publishable key
+
+3. Add your publishable key
+
+   Create a file named `.env` in the project root:
+
+   ```env
+   EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxx
    ```
 
-In the output, you'll find options to open the app in a
+   **Important:** Do not commit `.env` to version control.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Running the app
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### Android emulator / device
 
-## Get a fresh project
+```bash
+npm run android
+```
 
-When you're ready, run:
+Or start Expo and press `a`:
+
+```bash
+npx expo start
+```
+
+### Recommended: development build (full auth support)
+
+Expo Go has limitations with some auth flows. Use a development build for full Clerk support:
+
+```bash
+npm install -g eas-cli
+eas login
+eas build:configure
+eas build --profile development --platform android
+```
+
+After the build completes, install the generated APK on your device or emulator.
+
+## Project structure
+
+- `app/_layout.tsx` — wraps the app with `ClerkProvider`
+- `app/(auth)/sign-in.tsx` — sign-in flow
+- `app/(auth)/sign-up.tsx` — sign-up flow
+- `app/(home)/index.tsx` — protected home screen
+
+## Reset to a clean starter app
 
 ```bash
 npm run reset-project
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+This moves the current `app/` into `app-example/` and creates a fresh `app/` directory.
 
-## Learn more
+## Resources
 
-To learn more about developing your project with Expo, look at the following resources:
+- Clerk Expo Quickstart: https://clerk.com/docs/quickstarts/expo
+- Expo Router docs: https://docs.expo.dev/router/introduction/
+- Expo Development Builds: https://docs.expo.dev/develop/development-builds/introduction/
+- Clerk React Native SDK: https://clerk.com/docs/references/expo/overview
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
